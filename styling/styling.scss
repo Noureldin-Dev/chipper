@@ -8,8 +8,8 @@ html,
 header {
   background-color: black;
   z-index: 2;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  // overflow-x: hidden;
+  // overflow-y: hidden;
   user-select: none;
 
 }
@@ -387,16 +387,18 @@ height: max-content;
 #DisplayedPosts {
   position: relative;
   display: flex;
-  
+  overflow-y: scroll;
+
   flex-direction: column;
-  /* background: #fff; */
-  height: fit-content;
+
+  flex:1;
 }
 
 .PostUserProfile {
-  position: absolute;
-  top: 15px;
-  left: 15px;
+  // position: absolute;
+  // top: 15px;
+  cursor: pointer;
+  // left: 15px;
 }
 
 .PostText {
@@ -590,13 +592,15 @@ height: max-content;
 
 
 .PostNameOfPoster {
+  // background-color: #107cbe;
+  align-items: center;
   display: flex;
   text-decoration: none;
   flex-direction: row;
   position: absolute;
-  left: 70px;
+  left: 10px;
   top: 10px;
-  gap: 4px;
+  gap: 5px;
   float: left;
   font-size: 15px;
   justify-content: flex-start;

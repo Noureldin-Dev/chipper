@@ -8,8 +8,6 @@ html,
 header {
   background-color: black;
   z-index: 2;
-  overflow-x: hidden;
-  overflow-y: hidden;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -426,20 +424,18 @@ p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  overflow-y: scroll;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  /* background: #fff; */
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .PostUserProfile {
-  position: absolute;
-  top: 15px;
-  left: 15px;
+  cursor: pointer;
 }
 
 .PostText {
@@ -682,6 +678,9 @@ p {
 }
 
 .PostNameOfPoster {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -691,9 +690,9 @@ p {
       -ms-flex-direction: row;
           flex-direction: row;
   position: absolute;
-  left: 70px;
+  left: 10px;
   top: 10px;
-  gap: 4px;
+  gap: 5px;
   float: left;
   font-size: 15px;
   -webkit-box-pack: start;

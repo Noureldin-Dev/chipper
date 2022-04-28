@@ -6,7 +6,7 @@ function PhotoDialog({Image}) {
     const [Open, setOpen] = useState(false)
   return (
       <>
-      <div onClick={()=>{
+      <div style={{cursor:"pointer"}} onClick={()=>{
           setOpen(true)
         // console.log(Image)
         // console.log(Image.replace("s96","s300"))

@@ -152,7 +152,7 @@ router.push("/")
         </div>
       </Backdrop>
       <SideBar currentScreen="Home" PhotoURL={PhotoURL} username={UsernameAndEmailChecker[0]} user={LoggedInObject}/>
-      <Feed PhotoURL={PhotoURL} username= {username} user={LoggedInObject}/>
+      <Feed Screen="App" PhotoURL={PhotoURL} username= {username} user={LoggedInObject}/>
 <SearchSection/>
 
 

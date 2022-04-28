@@ -60,7 +60,7 @@ const unsub = onSnapshot(doc(db, "users", user.email), (doc) => {
     {LoggedIn !== null?
     <>
     <SideBar currentScreen="Bookmarks" PhotoURL={user?.photoURL} username={UsernameAndEmailChecker[0]} user={user}/>
-    <Feed PhotoURL={LoggedIn.photoURL} username= {UsernameAndEmailChecker[0]} user={LoggedIn} isBookmark={true} desiredBookmarks={FetchedBookmarks}/>
+    <Feed PhotoURL={LoggedIn.photoURL} username= {UsernameAndEmailChecker[0]} user={LoggedIn} Screen="Bookmarks" desiredBookmarks={FetchedBookmarks}/>
 <div style={{flex:1}}></div>
 </>
     :<LoadingScreen/>}

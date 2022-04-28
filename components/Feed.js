@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import PostSomething from './PostSomething'
 import { collection, query, getDocs,where, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from '../firebase';
@@ -22,18 +22,63 @@ import LoadingScreen from './LoadingScreen';
 import { increment } from "firebase/firestore";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { getStorage, ref,getDownloadURL,listAll } from "firebase/storage";
+import Post from "../components/Infinite endless scroll/Post"
 
 const storage = getStorage();
 
 
 
 
-function Feed({user,username,PhotoURL, isBookmark,desiredBookmarks=undefined, isProfile=false, desiredProfile=undefined}) {
+function Feed({user,username,PhotoURL,desiredBookmarks=undefined, Screen, desiredProfile=undefined,HaveToLoadMorePosts}) {
 const [Posts, setPosts] = useState([])
+const [nextPosts_loading, setNextPostsLoading] = useState(false);
+const [lastKey, setLastKey] = useState("");
 const [LoadingIsDone, setLoadingIsDone] = useState(false)
 const [OptionsFocused, setOptionsFocused] = useState(null)
 const [anchorEl, setAnchorEl] = React.useState(null);
 const [PostAttemptFeedback, setPostAttemptFeedback] = useState(<></>)
+
+
+
+const listInnerRef = useRef();
+const onScroll = () => {
+  if (listInnerRef.current) {
+    const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+    if (scrollTop + clientHeight === scrollHeight) {
+      console.log("reached bottom");
+      GetMorePosts()
+
+    }
+  }
+};
+
+
+useEffect(()=>{
+  GetMorePosts()
+},[HaveToLoadMorePosts])
+    
+
+
+
+const GetMorePosts = async() => {
+    const NewBatch =await Post.GetMorePosts(lastKey)
+    if (NewBatch.length != 0){
+    setPosts(Posts.concat(NewBatch))
+    setLastKey(NewBatch[NewBatch.length-1].Date)
+    }
+    else{
+        console.log("ur up to date")
+    }
+
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -126,7 +171,7 @@ horizontal:"right"
   {OptionsFocused?.ProfileOfPoster== username?
     <div className="OptionsOwnPost">
       <List style={{width:"100%"}} >
-{isBookmark?      
+{Screen == "Bookmarks"?      
  <ListItem className="PostOptionItem" disablePadding>
         <ListItemButton onClick={()=>(UnbookmarkPost(OptionsFocused.ID))}>
                 <div style={{display:"flex", alignItems:"center", gap:"10px"}}>
@@ -148,7 +193,7 @@ horizontal:"right"
                     }}>
                       <div style={{display:"flex", alignItems:"center", gap:"10px"}}>
 <BookmarkIcon/>
-                        <span>{isBookmark?"Unbookmark":"Bookmark"}</span>
+                        <span>{Screen == "Bookmarks"?"Unbookmark":"Bookmark"}</span>
       
                       </div>
                     </ListItemButton>
@@ -191,7 +236,7 @@ horizontal:"right"
               }}>
                 <div style={{display:"flex", alignItems:"center", gap:"10px"}}>
                   <BookmarkIcon />
-                  <span>{isBookmark?"Unbookmark":"Bookmark"}</span>
+                  <span>{Screen == "Bookmarks"?"Unbookmark":"Bookmark"}</span>
 
                 </div>
               </ListItemButton>
@@ -200,10 +245,10 @@ horizontal:"right"
           </div>
   }
 </Popover>
-    <Avatar referrerPolicy="no-referrer" className='PostUserProfile' src={post.PhotoURL}/>
     <Link href={`/user/${encodeURIComponent(post.ProfileOfPoster)}`}>
 
     <a className='PostNameOfPoster' >
+    <Avatar referrerPolicy="no-referrer" className='PostUserProfile' src={post.PhotoURL}/>
 <p className='DisplayNameOfPoster' >{post.NameOfPoster}</p>
 <p className='PostUsername'>@{post.ProfileOfPoster}</p>
 </a>
@@ -213,168 +258,213 @@ horizontal:"right"
   </div>
   )
 
-  useEffect(async function () {
+//   useEffect(async function () {
 
-    if (isBookmark !== undefined){
-      try{
-      const q = query(collection(db, "posts"), orderBy("Date", "desc"), where("ID","in",desiredBookmarks));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const posts = [];
-        querySnapshot.forEach(async (doc) => {
+//     if (Screen == "Bookmarks" !== undefined){
+//       try{
 
-// console.log(doc.data().ID)
+
+        
+//       const q = query(collection(db, "posts"), orderBy("Date", "desc"), where("ID","in",desiredBookmarks));
+//       const unsubscribe = onSnapshot(q, (querySnapshot) => {
+//         const posts = [];
+//         querySnapshot.forEach(async (doc) => {
+
+// // console.log(doc.data().ID)
           
-          // Create a reference under which you want to list
-          const listRef = ref(storage, doc.data().ID+"/Images");
+//           // Create a reference under which you want to list
+//           const listRef = ref(storage, doc.data().ID+"/Images");
           
 
-          var PostImages = []
-console.log("PostImages")
-console.log(PostImages)
-          listAll(listRef)
-          .then((res) => {
-            res.items.forEach((itemRef) => {
+//           var PostImages = []
+// console.log("PostImages")
+// console.log(PostImages)
+//           listAll(listRef)
+//           .then((res) => {
+//             res.items.forEach((itemRef) => {
 
 
-              getDownloadURL(ref(storage, itemRef._location.path_))
-  .then((url) => {
-    // `url` is the download URL for 'images/stars.jpg'
+//               getDownloadURL(ref(storage, itemRef._location.path_))
+//   .then((url) => {
+//     // `url` is the download URL for 'images/stars.jpg'
 
 
-    // Or inserted into an <img> element
-    console.log(url)
-    PostImages.push(url)
+//     // Or inserted into an <img> element
+//     console.log(url)
+//     PostImages.push(url)
     
-  })
-  .catch((error) => {
-    // Handle any errors
-  });
+//   })
+//   .catch((error) => {
+//     // Handle any errors
+//   });
 
 
 
 
-            });
-          }).catch((error) => {
-            // Uh-oh, an error occurred!
-          });
+//             });
+//           }).catch((error) => {
+//             // Uh-oh, an error occurred!
+//           });
 
-var ToBePosted = {...doc.data(),...PostImages}
-// console.log("ToBePosted")
-          posts.push(doc.data());
-        });
-const Loop = async (posts) => {
-  var postss = []
+// var ToBePosted = {...doc.data(),...PostImages}
+// // console.log("ToBePosted")
+//           posts.push(doc.data());
+//         });
+// const Loop = async (posts) => {
+//   var postss = []
 
-  for (const Post of posts) {
-
-
-
-    // console.log(Post);
-    const citiesRef = collection(db, "users");
-    const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
-    const querySnapshot2 = await getDocs(q2);
-
-    const FetchedPP = [];
-    querySnapshot2.forEach((doc1) => {
-      FetchedPP.push((doc1.data().PhotoURL).replace("s96","s200"));
-
-    });
-    const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0].replace("s96","s200") } };
-    // console.log(FinalPost)
-    postss.push(FinalPost);
-  }
-  // console.log(postss)
-
-  return postss
-}
+//   for (const Post of posts) {
 
 
 
-Loop(posts).then((res)=>{setPosts(res); setLoadingIsDone(true)})
-// console.log(x.then(value=>return value))
-        // console.log(posts)
-        // setPosts(x);
-        // console.log(Loop(posts))
-        // Loop(posts)
-        // console.log(posts)
-      });}catch(err){}}
+//     // console.log(Post);
+//     const citiesRef = collection(db, "users");
+//     const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
+//     const querySnapshot2 = await getDocs(q2);
 
+//     const FetchedPP = [];
+//     querySnapshot2.forEach((doc1) => {
+//       FetchedPP.push((doc1.data().PhotoURL).replace("s96","s200"));
 
-    if (isBookmark == undefined){
-      try{
+//     });
+//     const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0].replace("s96","s200") } };
+//     // console.log(FinalPost)
+//     postss.push(FinalPost);
+//   }
+//   // console.log(postss)
 
-
-
-const q = isProfile?query(collection(db, "posts"), orderBy("Date", "desc"),where("ProfileOfPoster","==",desiredProfile), limit(5)):query(collection(db, "posts"), orderBy("Date", "desc"), limit(10));
-
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const posts = [];
-        querySnapshot.forEach(async (doc) => {
-          // console.log(doc.data().ProfileOfPoster)
-
-          // posts.push(FinalPost);
-          posts.push(doc.data());
-        });
-const Loop = async (posts) => {
-  var postss = []
-
-  for (const Post of posts) {
-    // console.log(Post);
-    const citiesRef = collection(db, "users");
-    const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
-    const querySnapshot2 = await getDocs(q2);
-
-    const FetchedPP = [];
-    querySnapshot2.forEach((doc1) => {
-      FetchedPP.push(doc1.data().PhotoURL.replace("s96","s200"));
-
-    });
-    const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0] } };
-    // console.log(FinalPost)
-    postss.push(FinalPost);
-  }
-  // console.log(postss)
-
-  return postss
-}
+//   return postss
+// }
 
 
 
-Loop(posts).then((res)=>{setPosts(res);
-   setLoadingIsDone(true)
+// Loop(posts).then((res)=>{setPosts(res); setLoadingIsDone(true)})
+// // console.log(x.then(value=>return value))
+//         // console.log(posts)
+//         // setPosts(x);
+//         // console.log(Loop(posts))
+//         // Loop(posts)
+//         // console.log(posts)
+//       });}catch(err){}}
 
-  })
-// console.log(x.then(value=>return value))
-        // console.log(posts)
-        // setPosts(x);
-        // console.log(Loop(posts))
-        // Loop(posts)
-        // console.log(posts)
-      });
+
+//     if (Screen == "Bookmarks" == undefined){
+//       try{
+
+
+
+// const q = Screen == "Profile"?query(collection(db, "posts"), orderBy("Date", "desc"),where("ProfileOfPoster","==",desiredProfile), limit(5)):query(collection(db, "posts"), orderBy("Date", "desc"), limit(10));
+
+//       const unsubscribe = onSnapshot(q, (querySnapshot) => {
+//         const posts = [];
+//         querySnapshot.forEach(async (doc) => {
+//           // console.log(doc.data().ProfileOfPoster)
+
+//           // posts.push(FinalPost);
+//           posts.push(doc.data());
+//         });
+// const Loop = async (posts) => {
+//   var postss = []
+
+//   for (const Post of posts) {
+//     // console.log(Post);
+//     const citiesRef = collection(db, "users");
+//     const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
+//     const querySnapshot2 = await getDocs(q2);
+
+//     const FetchedPP = [];
+//     querySnapshot2.forEach((doc1) => {
+//       FetchedPP.push(doc1.data().PhotoURL.replace("s96","s200"));
+
+//     });
+//     const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0] } };
+//     // console.log(FinalPost)
+//     postss.push(FinalPost);
+//   }
+//   // console.log(postss)
+
+//   return postss
+// }
+
+
+
+// Loop(posts).then((res)=>{setPosts(res);
+//    setLoadingIsDone(true)
+
+//   })
+// // console.log(x.then(value=>return value))
+//         // console.log(posts)
+//         // setPosts(x);
+//         // console.log(Loop(posts))
+//         // Loop(posts)
+//         // console.log(posts)
+//       });
     
     
-    }catch{}}
-    },[desiredBookmarks,desiredProfile])
+//     }catch{}}
+//     },[desiredBookmarks,desiredProfile])
+  
+useEffect(async() => {
+try{
+  switch(Screen) {
+    case "App":
+      const FirstPostsApp =await Post.GetFirstBatch();
+      setPosts(FirstPostsApp)
+      setLastKey(FirstPostsApp[FirstPostsApp.length-1].Date)
+      setLoadingIsDone(true)
+      break;
+    case "Bookmarks":
+      if (desiredBookmarks.length != 0){
+        const FirstPostsBookmarks =await Post.GetFirstBatchOfBookmarks(desiredBookmarks);
+        setPosts(FirstPostsBookmarks)
+        setLastKey(FirstPostsBookmarks[FirstPostsBookmarks.length-1].Date)
+      }
+      else{
+        console.log("no entries")
+      }
+      setLoadingIsDone(true)
+
+      
+      break;
+    case "Profile":
+      const FirstPostsProfile =await Post.GetFirstBatchOfProfile(desiredProfile);
+      setPosts(FirstPostsProfile)
+      setLastKey(FirstPostsProfile[FirstPostsProfile.length-1].Date)
+      setLoadingIsDone(true)
+      break;
+
+      // code block
+  } }
+  catch{}
+
+
+
+},[])
+  
   return (
 <>
-{isProfile?
+{Screen == "Profile"?
 
-<div  id='DisplayedPosts'>
+<div                     
+
+                     id='DisplayedPosts'
+                     >
 {LoadingIsDone?DisplayedPosts:<></>}
 </div>
 
 :  <>
   {PostAttemptFeedback}
-    <div className='MiddleColumnContainer'>
-    <header id="FeedHeader"><strong>{isBookmark? "Bookmarks":"Home"}</strong></header>
+    <div onScroll={onScroll}
+                    ref={listInnerRef} className='MiddleColumnContainer'>
+    <header id="FeedHeader"><strong>{Screen == "Bookmarks"? "Bookmarks":"Home"}</strong></header>
 
-        {isBookmark||isProfile?<></>:<PostSomething PhotoURL={PhotoURL.replace("s96","s200")} username={username} user={user}/>}
+        {Screen == "App"?<PostSomething PhotoURL={PhotoURL.replace("s96","s200")} username={username} user={user}/>:<></>}
         <div id='DisplayedPosts'>
 {LoadingIsDone?
 
 (Posts?.length !== 0 )? DisplayedPosts:
 
-isBookmark?
+Screen == "Bookmarks"?
 
 <div>
 <h2>You have no bookmarks</h2>

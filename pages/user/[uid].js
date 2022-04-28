@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, auth } from '../../firebase';
@@ -23,14 +23,25 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
     const { uid } = router.query;
     const qUsername = uid;
     const [DesiredProfileName, setDesiredProfileName] = useState("")
-
-
+    const [HaveToLoadMorePosts, setHaveToLoadMorePosts] = useState(false)
     const {UsernameAndEmailChecker, setUsernameAndEmailChecker} = useContext(myContext);
 
 const username = UsernameAndEmailChecker[0];
 
 const [LoggedInObject, setLoggedInObject] = useState(null)
 
+const listInnerRef = useRef();
+const onScroll = () => {
+  if (listInnerRef.current) {
+    const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+    if (scrollTop + clientHeight === scrollHeight) {
+      console.log("reached bottom");
+      // GetMorePosts()
+      setHaveToLoadMorePosts(!HaveToLoadMorePosts)
+
+    }
+  }
+};
 
 
 useEffect(()=>{
@@ -66,9 +77,10 @@ useEffect(()=>{
 {LoggedInObject==null? <></>:
 <>
 <SideBar currentScreen={qUsername==UsernameAndEmailChecker[0]?"Profile":""}  PhotoURL={user?.photoURL} username={username} user={LoggedInObject}/>
-<div className='MiddleColumnContainer'>
+<div  onScroll={onScroll}
+                    ref={listInnerRef} className='MiddleColumnContainer'>
 
-<div>
+<div style={{display:"flex", flexDirection:"column"}}>
 <header  id="FeedHeader">
         <IconButton style={{position:"relative", left:"-10px"}} onClick={() => router.back()}>
           <KeyboardBackspaceIcon/>
@@ -78,8 +90,9 @@ useEffect(()=>{
         <p style={{fontWeight:"400", fontSize:"13px", color:"#71767B", position:"absolute", top:"1px"}}>{DesiredProfileName.NumberOfPosts == undefined? "0":DesiredProfileName.NumberOfPosts} posts</p>
         </div>
         </header>
+
         <ProfileOverview setDesiredProfileName={setDesiredProfileName} LoggedInObject={LoggedInObject} username ={qUsername}/>
-<Feed username= {UsernameAndEmailChecker[0]} user={LoggedInObject} isProfile={true} desiredProfile={qUsername} />
+<Feed username= {UsernameAndEmailChecker[0]} user={LoggedInObject} Screen="Profile" desiredProfile={qUsername} HaveToLoadMorePosts={HaveToLoadMorePosts}/>
 
 </div>
 
