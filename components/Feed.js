@@ -29,7 +29,7 @@ const storage = getStorage();
 
 
 
-function Feed({user,username,PhotoURL,desiredBookmarks=undefined, Screen, desiredProfile=undefined,HaveToLoadMorePosts}) {
+function Feed({user,username,PhotoURL,desiredBookmarks=undefined, Screen, desiredProfile=undefined,HaveToLoadMorePosts,ParentFeedUpdated}) {
 const [Posts, setPosts] = useState([])
 const [nextPosts_loading, setNextPostsLoading] = useState(false);
 const [lastKey, setLastKey] = useState("");
@@ -37,6 +37,7 @@ const [LoadingIsDone, setLoadingIsDone] = useState(false)
 const [OptionsFocused, setOptionsFocused] = useState(null)
 const [anchorEl, setAnchorEl] = React.useState(null);
 const [PostAttemptFeedback, setPostAttemptFeedback] = useState(<></>)
+const [FeedUpdated, setFeedUpdated] = useState(false)
 
 
 
@@ -105,6 +106,7 @@ const washingtonRef = doc(db, "users", user.email);
 await updateDoc(washingtonRef, {
   NumberOfPosts: increment(-1)
 }).then(()=>{
+  setFeedUpdated(!FeedUpdated)
   setPostAttemptFeedback(<CustomAlert message='Post deleted successfully'/>)
   setTimeout(()=>{setPostAttemptFeedback(<></>)},3400)
 })
@@ -435,11 +437,13 @@ try{
 
       // code block
   } }
-  catch{}
+  catch{
+    setLoadingIsDone(true)
+  }
 
 
 
-},[])
+},[FeedUpdated,ParentFeedUpdated])
   
   return (
 <>
@@ -458,7 +462,7 @@ try{
                     ref={listInnerRef} className='MiddleColumnContainer'>
     <header id="FeedHeader"><strong>{Screen == "Bookmarks"? "Bookmarks":"Home"}</strong></header>
 
-        {Screen == "App"?<PostSomething PhotoURL={PhotoURL.replace("s96","s200")} username={username} user={user}/>:<></>}
+        {Screen == "App"?<PostSomething updateFeed={[FeedUpdated, setFeedUpdated]} PhotoURL={PhotoURL.replace("s96","s200")} username={username} user={user}/>:<></>}
         <div id='DisplayedPosts'>
 {LoadingIsDone?
 

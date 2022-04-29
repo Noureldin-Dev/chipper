@@ -13,7 +13,7 @@ import TagIcon from '@mui/icons-material/Tag';
 // for the logo give credits to these people
 // <a href="https://www.freepnglogos.com/pics/logo-twitter-png" title="Image from freepnglogos.com">
 
-function SideBar({user, username, PhotoURL, currentScreen}) {
+function SideBar({user, username, PhotoURL, currentScreen, ParentFeedUpdated}) {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -23,7 +23,7 @@ function SideBar({user, username, PhotoURL, currentScreen}) {
   sx={{bgcolor:"hsla(208, 24%, 47%, 0.4)"}}
 >
   <div className="TweetDialog">
-<PostSomething user ={user} username={username} PhotoURL={PhotoURL} style={{height:"100%"}} />
+<PostSomething updateFeed={ParentFeedUpdated} user ={user} username={username} PhotoURL={PhotoURL} style={{height:"100%"}} />
   </div>
 </Dialog>
     <div id="sideBar">

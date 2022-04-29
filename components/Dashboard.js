@@ -28,7 +28,7 @@ const [LoadingAlternative, setLoadingAlternative] = useState(<></>)
 const [PhotoURL, setPhotoURL] = useState("")
 const [LoggedInObject, setLoggedInObject] = useState(null)
 const UsernameError = NewUsernameToBeSet.includes(" ")
-
+const [ParentFeedUpdated, setParentFeedUpdated] = useState(false)
 
 const CheckIfUsernameIsAvailable = () => {
 return
@@ -151,8 +151,8 @@ router.push("/")
         <button onClick={setNewUsername}>set</button>
         </div>
       </Backdrop>
-      <SideBar currentScreen="Home" PhotoURL={PhotoURL} username={UsernameAndEmailChecker[0]} user={LoggedInObject}/>
-      <Feed Screen="App" PhotoURL={PhotoURL} username= {username} user={LoggedInObject}/>
+      <SideBar ParentFeedUpdated={[ParentFeedUpdated, setParentFeedUpdated]} currentScreen="Home" PhotoURL={PhotoURL} username={UsernameAndEmailChecker[0]} user={LoggedInObject}/>
+      <Feed ParentFeedUpdated={ParentFeedUpdated} Screen="App" PhotoURL={PhotoURL} username= {username} user={LoggedInObject}/>
 <SearchSection/>
 
 

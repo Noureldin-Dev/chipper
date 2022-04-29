@@ -660,7 +660,7 @@ background-color: hsla(0, 0%, 0%, 50);
 #LoginScreenContainer {
 
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   flex-wrap: wrap;
   position: absolute;
   top: 0%;
@@ -668,42 +668,58 @@ background-color: hsla(0, 0%, 0%, 50);
   right: 0;
   left: 0;
   // background-color: yellow;
+
+  #SignInWithGoogleButton{
+    margin-top: 20px;
+    padding: 10px 80px;
+    border-radius: 30px;
+    border: none;
+    color: black;
+    background-color: white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 15px;
+    transition: 100ms;
+  }
+
+  #SignInWithGoogleButton:hover{
+    background-color: #E7E7E7;
+  }
+
+  #SignInWithGoogleButton:active{
+    background-color: #E6E6E6;
+  }
 }
 
 #loginScreenLeftSide{
   flex: 1;
+  background-color: #139BED;
 
 
-
-
-  #LoginScreenHeading {
-    font-size: 55px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-
-    #SVG{
-      // padding: 45.5 36.95;
-      // width: 100px;
-      // height: 100px;
-      // pointer-events: image;
-      position: absolute;
-      top: 10px;
-      size: 10px;
-      // color: rgb(214, 217, 219);
-      z-index: 100;
-      // fill: rgb(214, 217, 219);
-  fill: #D6D9DB;
-      cursor: pointer;
-      // stroke: 2px solid orange;
-    }
-  }
 }
 #loginScreenRightSide{
-  background-color: #202327;
+  background-color: black;
+  padding: 15px;
+  padding-left: 30px;
 flex: 1;
 
-  // min-width: 50%;
+#loginScreenRightSideContent{
+  width: 100%;
+
+  margin: auto;
+  margin-top: 100px;
+  // background-color: #fff;
+}
+
+h1{
+
+  margin-top: 30px;
+  font-size: 70px;
+}
+
+h2{
+  font-size: 30px;
+}
 }
 
 
@@ -711,5 +727,9 @@ flex: 1;
 @media screen and (max-width:995px){
   #LoginScreenContainer{
     flex-direction: column;
+  }
+
+  #loginScreenRightSide{
+    min-height: 60%;
   }
 }

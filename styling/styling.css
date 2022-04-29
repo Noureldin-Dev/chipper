@@ -763,9 +763,9 @@ p {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   position: absolute;
@@ -775,38 +775,57 @@ p {
   left: 0;
 }
 
+#LoginScreenContainer #SignInWithGoogleButton {
+  margin-top: 20px;
+  padding: 10px 80px;
+  border-radius: 30px;
+  border: none;
+  color: black;
+  background-color: white;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 15px;
+  -webkit-transition: 100ms;
+  transition: 100ms;
+}
+
+#LoginScreenContainer #SignInWithGoogleButton:hover {
+  background-color: #E7E7E7;
+}
+
+#LoginScreenContainer #SignInWithGoogleButton:active {
+  background-color: #E6E6E6;
+}
+
 #loginScreenLeftSide {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-}
-
-#loginScreenLeftSide #LoginScreenHeading {
-  font-size: 55px;
-  text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-#loginScreenLeftSide #LoginScreenHeading #SVG {
-  position: absolute;
-  top: 10px;
-  size: 10px;
-  z-index: 100;
-  fill: #D6D9DB;
-  cursor: pointer;
+  background-color: #139BED;
 }
 
 #loginScreenRightSide {
-  background-color: #202327;
+  background-color: black;
+  padding: 15px;
+  padding-left: 30px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+}
+
+#loginScreenRightSide #loginScreenRightSideContent {
+  width: 100%;
+  margin: auto;
+  margin-top: 100px;
+}
+
+#loginScreenRightSide h1 {
+  margin-top: 30px;
+  font-size: 70px;
+}
+
+#loginScreenRightSide h2 {
+  font-size: 30px;
 }
 
 @media screen and (max-width: 995px) {
@@ -815,6 +834,9 @@ p {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+  }
+  #loginScreenRightSide {
+    min-height: 60%;
   }
 }
 /*# sourceMappingURL=styling.css.map */

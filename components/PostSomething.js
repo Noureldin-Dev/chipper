@@ -18,7 +18,7 @@ import { updateDoc, increment } from "firebase/firestore";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 
-function PostSomething({user, username,PhotoURL}) {
+function PostSomething({user, username,PhotoURL, updateFeed}) {
 const [TextToBePosted, setTextToBePosted] = useState("")
 const [PostAttemptFeedback, setPostAttemptFeedback] = useState(<></>)
 const [SelectedFiles, setSelectedFiles] = useState([]);
@@ -77,6 +77,7 @@ const washingtonRef = doc(db, "users", user.email);
 await updateDoc(washingtonRef, {
     NumberOfPosts: increment(1)
 }).then(()=>{
+  updateFeed[1](!updateFeed[0])
   setPostAttemptFeedback(<CustomAlert message="Post created successfully"/>)
   setTimeout(()=>{setPostAttemptFeedback(<></>)},3300)
 })
