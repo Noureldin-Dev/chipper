@@ -173,9 +173,13 @@ header {
   }
 }
 
-@media screen and (max-width: 990px) {
+@media screen and (max-width: 1050px) {
   #SearchParent2 {
+    background-color: #039bea;
     display: none;
+    opacity: 0;
+    cursor: none;
+    pointer-events: none;
   }
 }
 

@@ -166,8 +166,7 @@ await updateDoc(UserRef, {
 
 }
 
-const DisplayedPosts =   
-  Posts.map(post =>
+const DisplayedPosts = Posts.map(post =>
     <div key={post.ID} className='PostContainer'>
       <IconButton onClick={(e)=>{
         handleClick(e);

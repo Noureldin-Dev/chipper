@@ -16,13 +16,32 @@ export default {
 
     var posts = [];
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-    //   console.log(doc.id, " => ", doc.data());
+
       posts.push(doc.data())
 
     });
 
-    return (posts)
+    var postss=[];
+    for (const Post of posts) {
+
+
+
+      // console.log(Post);
+      const citiesRef = collection(db, "users");
+      const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
+      const querySnapshot2 = await getDocs(q2);
+  
+      const FetchedPP = [];
+      querySnapshot2.forEach((doc1) => {
+        FetchedPP.push((doc1.data().PhotoURL).replace("s96","s200"));
+  
+      });
+      const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0].replace("s96","s200") } };
+      // console.log(FinalPost)
+      postss.push(FinalPost);
+    }
+
+    return (postss)
 }
 ,
 
@@ -40,7 +59,27 @@ GetMorePosts :async function (key) {
     posts.push(doc.data())
 
   });
-  return (posts)
+  var postss=[];
+  for (const Post of posts) {
+
+
+
+    // console.log(Post);
+    const citiesRef = collection(db, "users");
+    const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
+    const querySnapshot2 = await getDocs(q2);
+
+    const FetchedPP = [];
+    querySnapshot2.forEach((doc1) => {
+      FetchedPP.push((doc1.data().PhotoURL).replace("s96","s200"));
+
+    });
+    const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0].replace("s96","s200") } };
+    // console.log(FinalPost)
+    postss.push(FinalPost);
+  }
+
+  return (postss)
 }
 ,
 
@@ -61,10 +100,29 @@ GetFirstBatchOfBookmarks : async function  (desiredBookmarks) {
       }
     // console.log(docSnap.data())
       
-      if (i == desiredBookmarks.length -1){
-            return(posts)
-          }
+
     }
+    var postss=[];
+    for (const Post of posts) {
+
+
+
+      // console.log(Post);
+      const citiesRef = collection(db, "users");
+      const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
+      const querySnapshot2 = await getDocs(q2);
+  
+      const FetchedPP = [];
+      querySnapshot2.forEach((doc1) => {
+        FetchedPP.push((doc1.data().PhotoURL).replace("s96","s200"));
+  
+      });
+      const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0].replace("s96","s200") } };
+      // console.log(FinalPost)
+      postss.push(FinalPost);
+    }
+
+    return (postss)
 
   }
   
@@ -113,7 +171,27 @@ GetFirstBatchOfProfile :async function (desiredProfile) {
 
   });
   // console.log(posts)
-  return (posts)
+  var postss=[];
+  for (const Post of posts) {
+
+
+
+    // console.log(Post);
+    const citiesRef = collection(db, "users");
+    const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
+    const querySnapshot2 = await getDocs(q2);
+
+    const FetchedPP = [];
+    querySnapshot2.forEach((doc1) => {
+      FetchedPP.push((doc1.data().PhotoURL).replace("s96","s200"));
+
+    });
+    const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0].replace("s96","s200") } };
+    // console.log(FinalPost)
+    postss.push(FinalPost);
+  }
+
+  return (postss)
 }
 ,
 
@@ -131,7 +209,27 @@ querySnapshot.forEach((doc) => {
   posts.push(doc.data())
 
 });
-return (posts)
+var postss=[];
+    for (const Post of posts) {
+
+
+
+      // console.log(Post);
+      const citiesRef = collection(db, "users");
+      const q2 = query(citiesRef, where("username", "==", Post.ProfileOfPoster));
+      const querySnapshot2 = await getDocs(q2);
+  
+      const FetchedPP = [];
+      querySnapshot2.forEach((doc1) => {
+        FetchedPP.push((doc1.data().PhotoURL).replace("s96","s200"));
+  
+      });
+      const FinalPost = { ...Post, ...{ PhotoURL: FetchedPP[0].replace("s96","s200") } };
+      // console.log(FinalPost)
+      postss.push(FinalPost);
+    }
+
+    return (postss)
 }
 }
 
