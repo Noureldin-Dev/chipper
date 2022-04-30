@@ -8,22 +8,8 @@ import { useRouter } from 'next/router';
 
 
 
-function ProfileOverview({LoggedInObject,setDesiredProfileName, UserInfo}) {
+function ProfileOverview({LoggedInObject,currentUser, UserInfo}) {
   const router = useRouter()
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <div >
       {UserInfo !== null?<>
@@ -34,6 +20,8 @@ function ProfileOverview({LoggedInObject,setDesiredProfileName, UserInfo}) {
 <h3>{UserInfo.Name}</h3>
 <p className="ProfileOverviewUsername">@{UserInfo.username}</p>
 <p className='ProfileOverviewBio'>{UserInfo.bio}</p>
+
+  {UserInfo.username==currentUser?<button id='EditProfileButton'>Edit</button>:<></>}
 
 
 </div>

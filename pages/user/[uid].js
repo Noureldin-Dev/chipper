@@ -18,7 +18,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
  const User= () => {
 
-   const user = auth.currentUser
+    const user = auth.currentUser
     const router = useRouter()
     const { uid } = router.query;
     const qUsername = uid;
@@ -110,7 +110,7 @@ useEffect(()=>{
         </div>
         </header>
 
-        <ProfileOverview UserInfo={DesiredProfileName == ""?null:DesiredProfileName} LoggedInObject={LoggedInObject}/>
+        <ProfileOverview currentUser={UsernameAndEmailChecker[0]} UserInfo={DesiredProfileName == ""?null:DesiredProfileName} LoggedInObject={LoggedInObject}/>
 <Feed username= {UsernameAndEmailChecker[0]} user={LoggedInObject} Screen="Profile" desiredProfile={qUsername} HaveToLoadMorePosts={HaveToLoadMorePosts}/>
 
 </div>

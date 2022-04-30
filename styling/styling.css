@@ -65,6 +65,10 @@ header {
   gap: 0px;
 }
 
+.MiddleColumnContainer::-webkit-scrollbar {
+  display: none;
+}
+
 .MiddleColumnContainer {
   overscroll-behavior-y: none;
   /* height: 100px; */
@@ -75,6 +79,9 @@ header {
   /* important ^ */
   border-top: solid 1px rgba(128, 128, 128, 0.411);
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
   /* min-width: 600px; */
   -ms-flex-line-pack: center;
       align-content: center;
@@ -89,7 +96,6 @@ header {
 }
 
 #sideBar {
-  border-right: solid 1px rgba(128, 128, 128, 0.411);
   /* background-color: orange; */
   position: relative;
   overflow: hidden;
@@ -268,7 +274,7 @@ header {
   margin-left: 15px;
   margin-top: 15px;
   margin-right: 10px;
-  background-color: black;
+  background-color: #1E2125;
   color: white;
   border: none;
   resize: vertical;
@@ -293,8 +299,10 @@ p {
   position: relative;
   min-height: 130px;
   z-index: 1;
-  border-bottom: 1px solid #2f3336;
-  background-color: black;
+  margin-bottom: 20px;
+  background-color: #1E2125;
+  border-radius: 15px;
+  padding: 15px 15px 15px 5px;
 }
 
 #postTweetButton {
@@ -309,7 +317,7 @@ p {
   font-size: 15px;
   font-weight: 700;
   border-radius: 25px;
-  background-color: #139bed;
+  background-color: #009BE7;
   border: none;
   padding: 10px 20px 10px 20px;
   /* text-align: center; */
@@ -318,7 +326,7 @@ p {
 }
 
 #postTweetButton:hover {
-  background-color: #118cd6;
+  background-color: #038CD4;
 }
 
 #postTweetButton:active {
@@ -399,10 +407,9 @@ p {
 }
 
 .PostContainer {
-  /* background-color: #139bed; */
+  background-color: #16181C;
   position: relative;
-  border-bottom: 1px solid #2f3336;
-  border-top: 1px solid #2f3336;
+  border-radius: 15px;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
@@ -416,6 +423,7 @@ p {
   display: -ms-flexbox;
   display: flex;
   overflow-y: scroll;
+  gap: 20px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -472,7 +480,6 @@ p {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  border-left: solid 1px rgba(128, 128, 128, 0.411);
   background-color: black;
 }
 
@@ -638,7 +645,7 @@ p {
   margin-top: 10px;
   text-decoration: none;
   padding: 15px 30px 15px 30px;
-  background-color: #039bea;
+  background-color: #009BE7;
   /* height: 20px; */
   text-align: center;
   border-radius: 30px;
@@ -656,7 +663,7 @@ p {
 }
 
 .NavBarOptionTweet:hover {
-  background-color: #118cd6;
+  background-color: #038CD4;
 }
 
 .MoreHorizIcon {
@@ -738,7 +745,7 @@ p {
       -ms-flex-direction: row;
           flex-direction: row;
   position: absolute;
-  left: 10px;
+  left: 20px;
   top: 10px;
   gap: 5px;
   float: left;
@@ -787,8 +794,31 @@ p {
 }
 
 .MainInfo {
+  background-color: #16181C;
+  border-radius: 15px;
+  margin-bottom: 20px;
   text-align: left;
   padding: 15px;
+  padding-left: 25px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: relative;
+}
+
+.MainInfo #EditProfileButton {
+  position: absolute;
+  right: 15px;
+  top: 170px;
+  background-color: #009BE7;
+  border: none;
+  padding: 13px 26px;
+  font-size: 15px;
+  border-radius: 30px;
+}
+
+.MainInfo #EditProfileButton:hover {
+  background-color: #038CD4;
 }
 
 .ProfileOverviewUsername {

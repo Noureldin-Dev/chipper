@@ -1,3 +1,8 @@
+$cardColor:#16181C;
+$lightCardColor:#1E2125;
+$primaryColor:#009BE7;
+$primaryHoverColor:#038CD4;
+
 * {
   scroll-behavior: smooth;
   color: white;
@@ -51,6 +56,10 @@ header {
   gap: 0px;
 }
 
+.MiddleColumnContainer::-webkit-scrollbar {
+  display: none;
+}
+
 .MiddleColumnContainer {
   overscroll-behavior-y: none;
 
@@ -63,6 +72,8 @@ header {
   /* important ^ */
   border-top: solid 1px rgba(128, 128, 128, 0.411);
   overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none; 
   /* min-width: 600px; */
   align-content: center;
   text-align: center;
@@ -76,8 +87,7 @@ header {
 }
 
 #sideBar {
-  border-right: solid 1px rgba(128, 128, 128, 0.411);
-
+  // border-right: solid 1px rgba(128, 128, 128, 0.411);
   /* background-color: orange; */
   position: relative;
   overflow: hidden;
@@ -260,7 +270,7 @@ margin: 0 auto;
   margin-left: 15px;
   margin-top: 15px;
   margin-right: 10px;
-  background-color: black;
+  background-color: $lightCardColor;
   color: white;
   border: none;
   resize: vertical;
@@ -276,13 +286,17 @@ p {
 
 #PostAnything {
   /* height: 200px; */
+
   height: min-content;
   position: relative;
   min-height: 130px;
   z-index: 1;
-  border-bottom: 1px solid #2f3336;
+  margin-bottom: 20px;
+  // border-bottom: 1px solid #2f3336;
 
-  background-color: black;
+  background-color: $lightCardColor;
+  border-radius: 15px;
+  padding: 15px 15px 15px 5px;
 }
 
 #postTweetButton {
@@ -298,7 +312,7 @@ p {
   font-size: 15px;
   font-weight: 700;
   border-radius: 25px;
-  background-color: #139bed;
+  background-color: $primaryColor;
   border: none;
   padding: 10px 20px 10px 20px;
   /* text-align: center; */
@@ -306,7 +320,7 @@ p {
 }
 
 #postTweetButton:hover {
-  background-color: #118cd6;
+  background-color: $primaryHoverColor;
 }
 
 #postTweetButton:active {
@@ -374,10 +388,12 @@ p {
 }
 
 .PostContainer {
-  /* background-color: #139bed; */
+// padding-left: 15px;
+  background-color: $cardColor; 
   position: relative;
-  border-bottom: 1px solid #2f3336;
-border-top: 1px solid #2f3336; 
+  border-radius: 15px;
+  // border-bottom: 1px solid #2f3336;
+// border-top: 1px solid #2f3336; 
 height: max-content;
 
   overflow-wrap: break-word;
@@ -389,7 +405,7 @@ height: max-content;
   position: relative;
   display: flex;
   overflow-y: scroll;
-
+gap: 20px;
   flex-direction: column;
 
   flex:1;
@@ -443,7 +459,7 @@ height: max-content;
 #SearchParent {
 
   flex: 1;
-  border-left: solid 1px rgba(128, 128, 128, 0.411);
+  // border-left: solid 1px rgba(128, 128, 128, 0.411);
 
   
 
@@ -574,7 +590,7 @@ height: max-content;
   margin-top: 10px;
   text-decoration: none;
   padding: 15px 30px 15px 30px;
-  background-color: #039bea;
+  background-color: $primaryColor;
   /* height: 20px; */
   text-align: center;
   border-radius: 30px;
@@ -589,7 +605,7 @@ height: max-content;
 }
 
 .NavBarOptionTweet:hover {
-  background-color: #118cd6;
+  background-color: $primaryHoverColor;
 }
 
 .MoreHorizIcon {
@@ -655,7 +671,7 @@ height: max-content;
   text-decoration: none;
   flex-direction: row;
   position: absolute;
-  left: 10px;
+  left: 20px;
   top: 10px;
   gap: 5px;
   float: left;
@@ -694,8 +710,29 @@ height: max-content;
 
 
 .MainInfo {
+  background-color: $cardColor;
+  border-radius: 15px;
+  margin-bottom: 20px;
   text-align: left;
   padding: 15px;
+  padding-left: 25px;
+  height: fit-content;
+  position: relative;
+
+  #EditProfileButton{
+    position: absolute;
+    right: 15px;
+    top: 170px;
+    background-color: $primaryColor;
+    border:none;
+    padding: 13px 26px;
+    font-size: 15px;
+
+    border-radius: 30px;
+  }
+  #EditProfileButton:hover{
+    background-color: $primaryHoverColor;
+  }
 }
 .ProfileOverviewUsername{
   position: relative;
