@@ -58,6 +58,8 @@ function login() {
 <h1>Happening now</h1>
 <h2>Join Chipper today.</h2>
         <button id='SignInWithGoogleButton' onClick={loginWithGoogle}>Sign in with Google</button>
+    <p id='CreditingTwitter'>Chipper is a twitter clone</p>
+
         </div>
       </div>
       <div id="loginScreenLeftSide">
@@ -68,7 +70,8 @@ function login() {
 
 
 
-    </div></>
+    </div>
+    </>
   )
 }
 

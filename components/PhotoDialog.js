@@ -2,11 +2,12 @@ import React, {useState} from 'react'
 import Dialog from '@mui/material/Dialog';
 import { Avatar } from '@mui/material';
 function PhotoDialog({Image}) {
+
     const image = Image.replace("s96","s300")
     const [Open, setOpen] = useState(false)
   return (
       <>
-      <div style={{cursor:"pointer"}} onClick={()=>{
+      <div style={{cursor:"pointer", width:"140px", height:"140px"}} onClick={()=>{
           setOpen(true)
         // console.log(Image)
         // console.log(Image.replace("s96","s300"))

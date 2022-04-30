@@ -8,35 +8,16 @@ import { useRouter } from 'next/router';
 
 
 
-function ProfileOverview({username,LoggedInObject,setDesiredProfileName}) {
+function ProfileOverview({LoggedInObject,setDesiredProfileName, UserInfo}) {
   const router = useRouter()
   
-  const [UserInfo, setUserInfo] = useState(null)
-  const profile = username
 
 
 
 
 
 
-  useEffect(async()=>{
-    if (profile == undefined){
 
-      return
-    }
-
-
-    const q = query(collection(db, "users"), where("username", "==", profile));
-
-const querySnapshot = await getDocs(q);
-querySnapshot.forEach((doc) => {
-  setUserInfo(doc.data())
-console.log(doc.data())
-  setDesiredProfileName(doc.data())
-
-  
-});
-  },[profile])
 
 
 

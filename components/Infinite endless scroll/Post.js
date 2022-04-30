@@ -8,6 +8,7 @@ export default {
     
     
     GetFirstBatch :async function () {
+
     const postsRef = collection(db, "posts")
     const q = query(postsRef, orderBy("Date","desc"), limit(6));
     
@@ -20,7 +21,7 @@ export default {
       posts.push(doc.data())
 
     });
-    // console.log(posts)
+
     return (posts)
 }
 ,
@@ -45,19 +46,38 @@ GetMorePosts :async function (key) {
 
 GetFirstBatchOfBookmarks : async function  (desiredBookmarks) {
   var posts = [];
+
+
+  const GetBookmarks = async ()=>{
+    if (desiredBookmarks.length == 0){
+      return (posts)
+    }
+    for (let i = 0; i< desiredBookmarks.length ; i++){
+    
+      const docRef = doc(db, "posts", desiredBookmarks[i]);
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists()){
+        posts.push(docSnap.data())
+      }
+    // console.log(docSnap.data())
+      
+      if (i == desiredBookmarks.length -1){
+            return(posts)
+          }
+    }
+
+  }
   
-  await desiredBookmarks.forEach( (bookmark)=>{
-    console.log("reached Post fiucntipms")
-
-    const docRef = doc(db, "posts", bookmark);
-const docSnap =  getDoc(docRef);
-console.log(docSnap.data())
-posts.push(docSnap.data())
-  })
 
 
-  // console.log(posts)
-  return (posts)
+
+
+return(await GetBookmarks())
+
+
+
+
+  
 }
 ,
 

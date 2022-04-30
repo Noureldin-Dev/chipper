@@ -57,9 +57,9 @@ const unsub = onSnapshot(doc(db, "users", user.email), (doc) => {
     },[LoggedIn])
   return (
     <div className='fullScreenDiv'>
+      <SideBar currentScreen="Explore" PhotoURL={user?.photoURL} username={UsernameAndEmailChecker[0]} user={user}/>
     {LoggedIn !== null?
     <>
-    <SideBar currentScreen="Explore" PhotoURL={user?.photoURL} username={UsernameAndEmailChecker[0]} user={user}/>
     {/* <Feed PhotoURL={LoggedIn.photoURL} username= {UsernameAndEmailChecker[0]} user={LoggedIn} isBookmark={true} desiredexplore={Fetchedexplore}/> */}
 <div style={{flex:1}}></div>
 </>

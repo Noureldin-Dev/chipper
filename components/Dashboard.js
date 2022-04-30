@@ -23,11 +23,11 @@ const [LoadingIsComplete, setLoadingIsComplete] = useState(false)
   const [UsernameIsSet, setUsernameIsSet] = useState(true)
   const [NewUsernameToBeSet, setNewUsernameToBeSet] = useState("")
 const [username, setusername] = useState("")
+const [UsernameHasError, setUsernameHasError] = useState(false)
 const [ShouldLoad, setShouldLoad] = useState(false)
 const [LoadingAlternative, setLoadingAlternative] = useState(<></>)
 const [PhotoURL, setPhotoURL] = useState("")
 const [LoggedInObject, setLoggedInObject] = useState(null)
-const UsernameError = NewUsernameToBeSet.includes(" ")
 const [ParentFeedUpdated, setParentFeedUpdated] = useState(false)
 
 const CheckIfUsernameIsAvailable = () => {
@@ -36,8 +36,12 @@ return
 
 
   const setNewUsername =async  () => {
-if ((NewUsernameToBeSet.length == 0)||NewUsernameToBeSet.includes(" ")){
+if ((NewUsernameToBeSet.length < 8)||NewUsernameToBeSet.includes(" ")||NewUsernameToBeSet.includes("!")||NewUsernameToBeSet.includes(",")||NewUsernameToBeSet.includes("@")||NewUsernameToBeSet.includes("#")||NewUsernameToBeSet.includes("%")||NewUsernameToBeSet.includes("^")||NewUsernameToBeSet.includes("&")||NewUsernameToBeSet.includes("*")||NewUsernameToBeSet.includes("(")||NewUsernameToBeSet.includes(")")){
+  setUsernameHasError(true)
   return
+}
+else{
+  setUsernameHasError(false)
 }
 NewUsernameToBeSet=NewUsernameToBeSet.toLowerCase();
 // Add a new document in collection "cities"
@@ -46,7 +50,8 @@ await setDoc(doc(db, "usernames",NewUsernameToBeSet), {
   console.log(err)
 }).then(async(e)=>{
   await updateDoc(doc(db,'users', LoggedInObject.email),{
-    username:NewUsernameToBeSet
+    username:NewUsernameToBeSet,
+    Name:LoggedInObject.displayName
       }).then(()=>{
       setUsernameIsSet(true)
       UsernameAndEmailChecker[0]=NewUsernameToBeSet
@@ -126,16 +131,21 @@ router.push("/")
 
   return (
 <>
-{LoggedInObject !== null?     <div id="DashboardDiv" className='fullScreenDiv' >
-      
+<div id="DashboardDiv" className='fullScreenDiv' >
+<SideBar ParentFeedUpdated={[ParentFeedUpdated, setParentFeedUpdated]} currentScreen="Home" PhotoURL={PhotoURL} username={UsernameAndEmailChecker[0]} user={LoggedInObject}/>
+
+{LoggedInObject !== null?     
+      <>
       <Backdrop open={!UsernameIsSet} 
               sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               >
                 <div id="setUsernameBox">
         <h1>Set your username</h1>
         <p>This will be visible on all your posts and and will be used to tag you</p>
-        <TextField error={UsernameError? true: false}
-                  helperText={UsernameError? "Spaces are not allowed": false}
+        <div style={{width:"70%", margin:"auto", display:"flex", flexDirection:"column", gap:"10px"}}>
+        <TextField fullWidth error={UsernameHasError? true: false}
+
+                  helperText={UsernameHasError? "Your username should be atleast 8 characters, special characters allowed are: _ - $": false}
                     focused sx={{ borderColor:"white", input: { color: 'white'} }} onChange={(e)=>{
                       
                       setNewUsernameToBeSet(e.target.value)
@@ -147,17 +157,21 @@ router.push("/")
                       }
                       
                       }} label="Username" variant="outlined" />
+                      <button className='setUsernameButton' onClick={setNewUsername}>set username</button>
+                      </div>
 {ShouldLoad? <CircularProgress />: LoadingAlternative}
-        <button onClick={setNewUsername}>set</button>
+        
         </div>
       </Backdrop>
-      <SideBar ParentFeedUpdated={[ParentFeedUpdated, setParentFeedUpdated]} currentScreen="Home" PhotoURL={PhotoURL} username={UsernameAndEmailChecker[0]} user={LoggedInObject}/>
       <Feed ParentFeedUpdated={ParentFeedUpdated} Screen="App" PhotoURL={PhotoURL} username= {username} user={LoggedInObject}/>
+</>
+
+: <div className='MiddleColumnContainer'>
+<div id='DisplayedPosts'></div>
+</div>}
 <SearchSection/>
-
-
     </div>
-: <LoadingScreen/>}
+
 </>
   )
 }

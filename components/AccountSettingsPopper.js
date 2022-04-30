@@ -54,7 +54,7 @@ function BasicList() {
       <button aria-describedby={id} type="button" onClick={handleClick}>
        <Avatar referrerPolicy="no-referrer" src={PhotoURL}/> 
        <div>
-         <h3>{user.displayName}</h3>
+         <h3>{user?.displayName}</h3>
        <h6>@{username}</h6>
        </div>
       </button>

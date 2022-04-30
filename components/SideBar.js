@@ -42,7 +42,7 @@ function SideBar({user, username, PhotoURL, currentScreen, ParentFeedUpdated}) {
       <AccountProfilePicturePopper PhotoURL={PhotoURL} username= {username} user={user}/>
 
       </div>
-      <div id="SiteCredits">Clone built by <br/> <a href='www.noureldin.tech'>Noureldin</a></div>
+      {/* <div id="SiteCredits">Clone built by <br/> <a href='www.noureldin.tech'>Noureldin</a></div> */}
     </div>
     </>
 

@@ -25,7 +25,9 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
     const [DesiredProfileName, setDesiredProfileName] = useState("")
     const [HaveToLoadMorePosts, setHaveToLoadMorePosts] = useState(false)
     const {UsernameAndEmailChecker, setUsernameAndEmailChecker} = useContext(myContext);
+    const [UserInfo, setUserInfo] = useState(null)
 
+    
 const username = UsernameAndEmailChecker[0];
 
 const [LoggedInObject, setLoggedInObject] = useState(null)
@@ -42,7 +44,22 @@ const onScroll = () => {
     }
   }
 };
+useEffect(async()=>{
+  if (qUsername == undefined){
 
+    return
+  }
+
+
+  const q = query(collection(db, "users"), where("username", "==", qUsername));
+
+const querySnapshot = await getDocs(q);
+querySnapshot.forEach((doc) => {
+setDesiredProfileName(doc.data())
+
+
+});
+},[qUsername])
 
 useEffect(()=>{
 
@@ -73,10 +90,12 @@ useEffect(()=>{
 
   return (
     <div className='fullScreenDiv'>
-
-{LoggedInObject==null? <></>:
-<>
 <SideBar currentScreen={qUsername==UsernameAndEmailChecker[0]?"Profile":""}  PhotoURL={user?.photoURL} username={username} user={LoggedInObject}/>
+
+{LoggedInObject==null? <div className='MiddleColumnContainer'>
+      <div id='DisplayedPosts'></div>
+      </div>:
+<>
 <div  onScroll={onScroll}
                     ref={listInnerRef} className='MiddleColumnContainer'>
 
@@ -86,22 +105,22 @@ useEffect(()=>{
           <KeyboardBackspaceIcon/>
         </IconButton>
         <div style={{display:"flex", position:"relative",left:"20px", flexDirection:"column"}}>
-        <strong style={{position:"absolute",top:"-5px"}}>{DesiredProfileName.Name}</strong>
-        <p style={{fontWeight:"400", fontSize:"13px", color:"#71767B", position:"absolute", top:"1px"}}>{DesiredProfileName.NumberOfPosts == undefined? "0":DesiredProfileName.NumberOfPosts} posts</p>
+        <strong style={{position:"absolute",top:"-5px", width:'500px'}} >{DesiredProfileName.Name}</strong>
+        <p style={{fontWeight:"400", fontSize:"13px", color:"#71767B", position:"absolute", top:"1px"}}>{DesiredProfileName.NumberOfPosts == undefined? "":DesiredProfileName.NumberOfPosts+" posts"}</p>
         </div>
         </header>
 
-        <ProfileOverview setDesiredProfileName={setDesiredProfileName} LoggedInObject={LoggedInObject} username ={qUsername}/>
+        <ProfileOverview UserInfo={DesiredProfileName == ""?null:DesiredProfileName} LoggedInObject={LoggedInObject}/>
 <Feed username= {UsernameAndEmailChecker[0]} user={LoggedInObject} Screen="Profile" desiredProfile={qUsername} HaveToLoadMorePosts={HaveToLoadMorePosts}/>
 
 </div>
 
 
 </div>
-<SearchSection/>
 </>
 }
 
+<SearchSection/>
 
 </div>
   )
