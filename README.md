@@ -1,1 +1,1 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+Chipper is a clone of Twitter, it offers similiar functionality but has slightly cleaner looking UI.
