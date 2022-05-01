@@ -514,6 +514,43 @@ p {
   width: 100%;
 }
 
+#SearchParent #SearchParent2 #WhoToFollowBox .WhoToFollowProfiles {
+  border-radius: 15px;
+  -webkit-transition: 300ms;
+  transition: 300ms;
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+
+#SearchParent #SearchParent2 #WhoToFollowBox .WhoToFollowProfiles .Names {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  width: 100%;
+}
+
+#SearchParent #SearchParent2 #WhoToFollowBox .WhoToFollowProfiles .Names .nameofUser {
+  font-size: 16px;
+  font-weight: 100;
+}
+
+#SearchParent #SearchParent2 #WhoToFollowBox .WhoToFollowProfiles .Names .usernameofuser {
+  color: gray;
+}
+
+#SearchParent #SearchParent2 #WhoToFollowBox .WhoToFollowProfiles:hover {
+  background-color: #1D1F23;
+}
+
 #SearchParent #SearchParent2 #SearchChipperBox {
   border-radius: 30px;
   background-color: #1F2226;
@@ -879,7 +916,7 @@ p {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  background-color: #139BED;
+  background-color: #009BE7;
 }
 
 #loginScreenRightSide {

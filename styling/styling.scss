@@ -491,6 +491,43 @@ gap: 20px;
   border-radius: 15px;
   padding: 15px;
   width: 100%;
+
+  .WhoToFollowProfiles{
+    border-radius: 15px;
+    transition: 300ms;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    // background-color: #038CD4;
+
+    .Names{
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+
+
+.nameofUser{
+  font-size: 16px;
+  font-weight: 100;
+
+}
+.usernameofuser{
+  color: gray;
+
+  
+}
+
+    }
+
+
+    
+  }
+
+  .WhoToFollowProfiles:hover{
+    background-color: #1D1F23;
+  }
  }
  
  #SearchChipperBox{
@@ -787,7 +824,7 @@ background-color: hsla(0, 0%, 0%, 50);
 
 #loginScreenLeftSide{
   flex: 1;
-  background-color: #139BED;
+  background-color: $primaryColor;
 
 
 }

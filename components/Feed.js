@@ -331,7 +331,7 @@ return()=>{
 
 
 
-},[FeedUpdated,ParentFeedUpdated, desiredBookmarks])
+},[FeedUpdated,ParentFeedUpdated, desiredBookmarks,desiredProfile])
   
   return (
 <>

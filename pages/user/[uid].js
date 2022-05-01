@@ -12,6 +12,7 @@ import Feed from '../../components/Feed';
 import LoadingScreen from '../../components/LoadingScreen';
 import {IconButton } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { doc, setDoc, getDoc, orderBy, limit } from "firebase/firestore"; 
 
 
 
@@ -120,7 +121,7 @@ useEffect(()=>{
 </>
 }
 
-<SearchSection/>
+<SearchSection />
 
 </div>
   )

@@ -35,6 +35,8 @@ return
 }
 
 
+
+
   const setNewUsername =async  () => {
 if ((NewUsernameToBeSet.length < 8)||NewUsernameToBeSet.includes(" ")||NewUsernameToBeSet.includes("!")||NewUsernameToBeSet.includes(",")||NewUsernameToBeSet.includes("@")||NewUsernameToBeSet.includes("#")||NewUsernameToBeSet.includes("%")||NewUsernameToBeSet.includes("^")||NewUsernameToBeSet.includes("&")||NewUsernameToBeSet.includes("*")||NewUsernameToBeSet.includes("(")||NewUsernameToBeSet.includes(")")){
   setUsernameHasError(true)

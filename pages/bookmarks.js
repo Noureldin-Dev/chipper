@@ -11,6 +11,9 @@ import Feed from '../components/Feed';
 import { onSnapshot } from "firebase/firestore";
 import { useRouter } from 'next/router';
 import SearchSection from '../components/SearchSection';
+import { doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "firebase/firestore"; 
+
+
 function bookmarks() {
   const router = useRouter()
 

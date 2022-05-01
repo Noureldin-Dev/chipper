@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { doc, getDoc } from "firebase/firestore";
 import { auth,username } from '../firebase';
-import { db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import SideBar from '../components/SideBar';
 import LoadingScreen from '../components/LoadingScreen';
@@ -10,6 +9,12 @@ import { useContext } from 'react';
 import Feed from '../components/Feed';
 import { onSnapshot } from "firebase/firestore";
 import { useRouter } from 'next/router';
+import { doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "firebase/firestore"; 
+import { db } from '../firebase';
+
+
+
+
 function explore() {
   const router = useRouter()
 

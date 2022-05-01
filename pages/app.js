@@ -9,6 +9,8 @@ import LoadingScreen from '../components/LoadingScreen';
 import Head from 'next/head';
 
 
+
+
 function app() {
     const checkUserinDB = async (user) => {
         const docRef = doc(db, "users", user.email);
