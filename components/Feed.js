@@ -1,22 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react'
 import PostSomething from './PostSomething'
-import { collection, query, getDocs,where, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from '../firebase';
-import { limit } from 'firebase/firestore';
 import { Avatar,IconButton } from '@mui/material';
-// import LoadingScreen from './LoadingScreen';
 import CircularProgress from '@mui/material/CircularProgress';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Popover,Typography } from '@mui/material';
 import { deleteDoc, doc } from 'firebase/firestore';
 import {List, ListItem, ListItemButton} from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Alert } from '@mui/material';
-import { Snackbar } from '@mui/material';
 import CustomAlert from './CustomAlert';
 import {  arrayUnion, arrayRemove,updateDoc } from "firebase/firestore";
-import { getDoc } from "firebase/firestore";
-import { Book } from '@mui/icons-material';
 import Link from 'next/link';
 import LoadingScreen from './LoadingScreen';
 import { increment } from "firebase/firestore";
@@ -38,16 +31,22 @@ const [OptionsFocused, setOptionsFocused] = useState(null)
 const [anchorEl, setAnchorEl] = React.useState(null);
 const [PostAttemptFeedback, setPostAttemptFeedback] = useState(<></>)
 const [FeedUpdated, setFeedUpdated] = useState(false)
-
-
+const [IsLoadingOlderPosts, setIsLoadingOlderPosts] = useState(false)
+const [LoadedAllPosts, setLoadedAllPosts] = useState(false)
 
 const listInnerRef = useRef();
-const onScroll = () => {
+const onScroll = async () => {
   if (listInnerRef.current) {
     const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
     if (scrollTop + clientHeight === scrollHeight) {
+      console.log(scrollTop)
+      console.log(clientHeight)
+      console.log(scrollHeight)
       console.log("reached bottom");
-      GetMorePosts()
+      setIsLoadingOlderPosts(true)
+      await GetMorePosts().then(()=>{
+        setIsLoadingOlderPosts(false)
+      })
 
     }
   }
@@ -76,6 +75,9 @@ var NewBatch =[]
       //   break;
 
       case "Profile":
+        if (desiredProfile == undefined){
+          return
+        }
         NewBatch =await Post.GetMorePostsOfProfile(lastKey, desiredProfile)
         break;
   
@@ -88,7 +90,7 @@ var NewBatch =[]
     setLastKey(NewBatch[NewBatch.length-1].Date)
     }
     else{
-        console.log("ur up to date")
+      setLoadedAllPosts(true)
     }
 
 }
@@ -338,11 +340,13 @@ return()=>{
 {PostAttemptFeedback}
 
 {Screen == "Profile"?
-
+<>
 <div id='DisplayedPosts'>
 {LoadingIsDone?DisplayedPosts:<></>}
-</div>
+{IsLoadingOlderPosts && LoadedAllPosts== false?<div style={{overflow:"hidden", height:"100px"}}><CircularProgress sx={{marginTop:"25px"}} size={"50px"} /></div>:<></>}
 
+</div>
+</>
 :  <>
     <div onScroll={onScroll}
                     ref={listInnerRef} className='MiddleColumnContainer'>
@@ -368,7 +372,14 @@ Screen == "Bookmarks"?
 :
 <div className='loader'><CircularProgress size={"40px"} /></div> }
 
+
+
+
+{IsLoadingOlderPosts && LoadedAllPosts== false?<div style={{overflow:"hidden", height:"100px"}}><CircularProgress sx={{marginTop:"25px"}} size={"50px"} /></div>:<></>}
+
 </div>
+
+
     </div></>}
 </>
   )

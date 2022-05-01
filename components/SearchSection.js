@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { doc, getDoc, collection, query, orderBy, limit, getDocs } from "firebase/firestore";
 import {db} from "../firebase"
-import { Avatar, Link } from '@mui/material';
+import { Avatar } from '@mui/material';
+import Link from 'next/link';
+
 
 function SearchSection() {
 

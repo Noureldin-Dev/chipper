@@ -843,7 +843,7 @@ p {
   position: relative;
 }
 
-.MainInfo #EditProfileButton {
+.MainInfo .EditProfileButton {
   position: absolute;
   right: 15px;
   top: 170px;
@@ -854,7 +854,7 @@ p {
   border-radius: 30px;
 }
 
-.MainInfo #EditProfileButton:hover {
+.MainInfo .EditProfileButton:hover {
   background-color: #038CD4;
 }
 

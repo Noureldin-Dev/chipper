@@ -407,7 +407,6 @@ height: max-content;
   overflow-y: scroll;
 gap: 20px;
   flex-direction: column;
-
   flex:1;
 }
 
@@ -756,7 +755,7 @@ gap: 20px;
   height: fit-content;
   position: relative;
 
-  #EditProfileButton{
+  .EditProfileButton{
     position: absolute;
     right: 15px;
     top: 170px;
@@ -767,7 +766,7 @@ gap: 20px;
 
     border-radius: 30px;
   }
-  #EditProfileButton:hover{
+  .EditProfileButton:hover{
     background-color: $primaryHoverColor;
   }
 }

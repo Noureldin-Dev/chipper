@@ -26,7 +26,7 @@ import { doc, setDoc, getDoc, orderBy, limit } from "firebase/firestore";
     const [DesiredProfileName, setDesiredProfileName] = useState("")
     const [HaveToLoadMorePosts, setHaveToLoadMorePosts] = useState(false)
     const {UsernameAndEmailChecker, setUsernameAndEmailChecker} = useContext(myContext);
-    const [UserInfo, setUserInfo] = useState(null)
+
 
     
 const username = UsernameAndEmailChecker[0];
@@ -56,7 +56,10 @@ useEffect(async()=>{
 
 const querySnapshot = await getDocs(q);
 querySnapshot.forEach((doc) => {
-setDesiredProfileName(doc.data())
+  doc.data().email = doc.id;
+  let UserObj = doc.data()
+  UserObj.Email = doc.id
+setDesiredProfileName(UserObj)
 
 
 });
@@ -111,7 +114,7 @@ useEffect(()=>{
         </div>
         </header>
 
-        <ProfileOverview currentUser={UsernameAndEmailChecker[0]} UserInfo={DesiredProfileName == ""?null:DesiredProfileName} LoggedInObject={LoggedInObject}/>
+        <ProfileOverview currentUser={UsernameAndEmailChecker} UserInfo={DesiredProfileName == ""?null:DesiredProfileName} LoggedInObject={LoggedInObject}/>
 <Feed username= {UsernameAndEmailChecker[0]} user={LoggedInObject} Screen="Profile" desiredProfile={qUsername} HaveToLoadMorePosts={HaveToLoadMorePosts}/>
 
 </div>
